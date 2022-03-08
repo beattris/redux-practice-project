@@ -5,7 +5,8 @@ import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import Notification from "./components/UI/Notification";
-import { sendCartData } from "./store/cart-slice";
+import { sendCartData } from "./store/cart-actions";
+import {fetchCartData} from "./store/cart-actions";
 
 // Defines a variable outside the fxn so that it does not change and is not reinitialized when the 
 // component renders again. It is only initialised when the file is parsed for the first time.
@@ -18,13 +19,19 @@ function App() {
   const notification = useSelector((state) => state.ui.notification);
 
   useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch])
+
+  useEffect(() => {
     if (isInitial){
       // isInitial is set to false here so that the check won't happen again but only blocks
       // the cart data from being sent the first time this effect executes.
       isInitial = false;
       return;
     }
-    dispatch(sendCartData(cart));
+    if (cart.changed){
+      dispatch(sendCartData(cart));
+    }
   }, [cart, dispatch]);
 
   return (
