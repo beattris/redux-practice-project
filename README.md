@@ -1,4 +1,4 @@
-# DeliciousMeals - A food order app
+# ReduxCart - An app that manages the cart state and allows using interaction.
 
 ![Home view of the food order app](./01-starting-project/public/reduxcart.png)
 
